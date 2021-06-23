@@ -1,0 +1,383 @@
+<body>
+    <div class="col-md-12 col-lg-6 offset-md-3">
+        <!--begin::Card-->
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                <div class="card-title">
+                    <h3 class="card-label"> Formulario de inscripción para recibir asesoramiento jurídico.
+                        <span class="d-block text-muted pt-2 font-size-sm"> Por favor complete el siguiente formulario:
+                        </span>
+                    </h3>
+                </div>
+
+            </div>
+
+            <!--begin::Form-->
+            <form class="form" autocomplete="off" [formGroup]="datosForm" (ngSubmit)="validarDNI()">
+
+                <div class="card-body">
+                    <ng-container *ngIf="!cargar_datos">
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Datos Personales:</h3>
+                        <!-- Persona Group -->
+                        <div class="mb-15">
+                            <!-- <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Nombre/s:</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" placeholder="Ingrese su Nombre/s"
+                                    formControlName="nombre">
+                                <span class="form-text text-muted">Por favor ingrese su Nombre/s</span>
+                            </div>
+                        </div> -->
+                            <!--  <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Apellido/s:</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" placeholder="Ingrese su Apellido/s"
+                                    formControlName="apellido">
+                                <span class="form-text text-muted">Por favor ingrese su Apellido/s</span>
+                            </div>
+                        </div> -->
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Número de documento:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese su número de documento"
+                                        formControlName="dni" [class.is-invalid]='documentoNoValido'>
+                                    <span *ngIf='documentoNoValido' class="text-danger col-lg-6">Por
+                                        favor ingrese su número de documento</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Número de tramite:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control"
+                                        placeholder="Ingrese el número de trámite (DNI) sin los ceros"
+                                        formControlName="nro_Tramite" [class.is-invalid]='nroTramiteNoValido'>
+                                    <span *ngIf='nroTramiteNoValido' class="text-danger col-lg-6">Ingrese el número de
+                                        trámite (DNI) sin los ceros </span>
+                                </div>
+
+
+                            </div>
+                            <details>
+                                <summary class="btn btn-link btn-sm">¿Como obtener el número de tramite?</summary>
+                                <div>
+                                    <figure>
+                                        <img src="../../../assets//SR.DNI.jpg" class="img-responsive"
+                                            alt="ubicación del número de trámite"
+                                            title="Ubicación del número de trámite">
+                                    </figure>
+                                </div>
+                            </details>
+                            <div class="form-group row align-items-center">
+                                <label class="col-lg-3 col-form-label">Sexo:</label>
+                                <div class="col-lg-9">
+                                    <div class="row align-items-center">
+
+                                        <div class="checkbox-inline col-lg-9">
+                                            <label class="checkbox">
+                                                <input type="radio" formControlName="sexo" value="F"
+                                                    [class.is-invalid]='sexoNoValido'>
+                                                <i class="ti-check text-active" aria-hidden="true"></i>
+                                                <span></span>Femenino</label>
+                                            <label class="checkbox">
+                                                <input type="radio" formControlName="sexo" value="M"
+                                                    [class.is-invalid]='sexoNoValido'>
+                                                <i class="ti-check text-active" aria-hidden="true"></i>
+                                                <span></span>Masculino</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+
+                                        <span *ngIf='sexoNoValido' class="text-danger col-lg-9"> >Seleccioná el sexo
+                                            como
+                                            figura en el documento </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="datos_per">
+                        <ng-container *ngIf="datosForm.invalid">
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <recaptcha formControlName="myRecaptcha" (scriptLoad)="onScriptLoad()"
+                                        (scriptError)="onScriptError()" (resolved)="resolved($event)">
+                                    </recaptcha>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!datosForm.invalid">
+                            <div class="row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4">
+                                    <button type="submit" class="btn btn-primary mr-2"
+                                        [disabled]="datosForm.invalid">Validar
+                                        identidad</button>
+                                    <!--  <button onclick="location.href='https://ingreso.ciudadanianqn.gob.ar'"
+                                class="btn btn-secondary">Volver</button> -->
+                                </div>
+                                <div class="col-lg-4"></div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <!--  <ng-container *ngIf="isLoading$ | async">
+                    <span class="spinner spinner-primary ml-5"></span>
+                    <h3 class="text-dark font-weight-bold">
+                        <small>
+                            * Consultando los datos en los servicios de Renaper, por favor
+                            espere!</small>
+                    </h3>
+                </ng-container> -->
+                </div>
+            </form>
+
+            <form class="form" autocomplete="off" [formGroup]="formWeb" (ngSubmit)="guardar()">
+
+                <div class="card-body">
+                    <ng-container *ngIf="cargar_datos">
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2. Datos de contacto:</h3>
+                        <span class="d-block text-muted pt-2 font-size-sm"> Por favor complete o modifique los datos de
+                            su domicilio:
+                        </span>
+                        <!--Datos Seguimiento Group  -->
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Localidad:</label>
+                                <div class="col-lg-9">
+                                    <select class="form-control is-danger" formControlName="localidad"
+                                        [class.is-invalid]='localidadNoValido'>
+                                        <option value="">Seleccione una localidad</option>
+                                        <option *ngFor="let localidad of localidades" [value]="localidad.nombre">
+                                            {{ localidad.nombre }}
+                                        </option>
+                                    </select>
+                                    <span *ngIf='localidadNoValido' class="text-danger col-lg-9">Ingrese
+                                        la localidad de destino</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Codigo postal:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el codigo postal"
+                                        formControlName="cpostal">
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Barrio</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del barrio"
+                                        formControlName="barrio">
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Calle:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la calle"
+                                        formControlName="calle" [class.is-invalid]='calleNoValido'>
+                                    <span *ngIf='calleNoValido' class="text-danger col-lg-9">Ingrese el
+                                        nombre de la calle</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Número:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el número"
+                                        formControlName="numero" [class.is-invalid]='numeroNoValido'>
+                                    <span *ngIf='numeroNoValido' class="text-danger col-lg-9">Ingrese el
+                                        número</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Piso:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el piso"
+                                        formControlName="piso">
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Departamento:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el departamento"
+                                        formControlName="departamento">
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Mono Block:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" placeholder="Ingrese el monoblock"
+                                        formControlName="monoblock">
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                            <span class="d-block text-muted pt-2 font-size-sm"> Por favor complete los campos, para que
+                                podamos ponernos en contacto.:
+                            </span>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Email:</label>
+                                <div class="col-lg-9">
+                                    <input type="email" class="form-control" placeholder="Ingrese su email"
+                                        formControlName="email" [class.is-invalid]='emailNoValido'>
+                                    <span *ngIf='emailNoValido' class="text-danger col-lg-9">Ingrese el
+                                        correo electrónico de contacto</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Teléfono:</label>
+                                <div class="col-lg-9">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="la la-chain"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control col-lg-5"
+                                            placeholder="Ingrese su número teléfono" formControlName="telefono"
+                                            [class.is-invalid]='celularNoValido'>
+                                        <span *ngIf='celularNoValido' class="text-danger col-lg-7">Ingrese un teléfono
+                                            de
+                                            contacto</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <label class="col-lg-3 col-form-label">Desea ser contactado por medio de una red
+                                    social:</label>
+                                <div class="col-lg-9">
+                                    <div class="row align-items-center">
+
+                                        <div class="checkbox-inline col-lg-9">
+                                            <label class="checkbox">
+                                                <input type="radio" formControlName="contactoRedSocial" value="Si"
+                                                    (change)="activarRedSocial()"
+                                                    [class.is-invalid]='contactoRedSocialNoValido'>
+                                                <i class="ti-check text-active" aria-hidden="true"></i>
+                                                <span></span>Si</label>
+                                            <label class="checkbox">
+                                                <input type="radio" formControlName="contactoRedSocial" value="No"
+                                                    (change)="activarRedSocial()"
+                                                    [class.is-invalid]='contactoRedSocialNoValido'>
+                                                <i class="ti-check text-active" aria-hidden="true"></i>
+                                                <span></span>No</label>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+
+                                        <span *ngIf='contactoRedSocialNoValido' class="text-danger col-lg-9">
+                                            >Seleccioná una opcion. </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <ng-container *ngIf="redSocial">
+                                <div class="form-group row align-items-center">
+                                    <label class="col-lg-3 col-form-label">Selecciona por cual de ella desea ser
+                                        contactado.:</label>
+                                    <div class="col-lg-9">
+                                        <div class="row align-items-center">
+
+                                            <div class="checkbox-inline col-lg-9">
+                                                <label class="checkbox">
+                                                    <input type="" formControlName="redesSociales" value="Facebook"
+                                                        [class.is-invalid]='redesSocialesNoValido'>
+
+                                                    <span>
+                                                    </span>Facebook<i class="flaticon-facebook-letter-logo icon-md"></i>
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="" formControlName="redesSociales" value="Instagram"
+                                                        [class.is-invalid]='redesSocialesNoValido'>
+
+                                                    <span></span>Instagram <i
+                                                        class="flaticon-instagram-logo icon-md"></i></label>
+                                                <label class="checkbox">
+                                                    <input type="" formControlName="redesSociales" value="Whatsapp"
+                                                        [class.is-invalid]='redesSocialesNoValido'>
+
+                                                    <span></span>Whatsapp <i
+                                                        class="flaticon-whatsapp icon-md"></i></label>
+                                                <label class="checkbox">
+                                                    <input type="" formControlName="redesSociales" value="Twitter"
+                                                        [class.is-invalid]='redesSocialesNoValido'>
+
+                                                    <span></span>Twitter <i
+                                                        class="flaticon-twitter-logo icon-md"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+
+                                            <span *ngIf='redesSocialesNoValido' class="text-danger col-lg-9">
+                                                >Seleccioná una opcion. </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ng-container>
+
+
+
+
+                        </div>
+                        <!-- Datos Complementarios Group -->
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Datos complementarios:</h3>
+                        <div class="mb-3">
+
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Ingrese el motivo de su consulta:</label>
+                                <div class="col-lg-9">
+                                    <textarea type="text" class="form-control" rows="10"
+                                        placeholder="Brinde detalles de su consulta" formControlName='motivo_consulta'
+                                        [class.is-invalid]='motivoNoValido'> </textarea>
+                                    <span *ngIf='motivoNoValido' class="text-danger col-lg-9">Ingrese un los datalles
+                                        solicitados</span>
+                                    <span *ngIf="formWeb.get('motivo_consulta').hasError('maxlength')"
+                                        class="text-danger col-lg-9">La cantidad maxima de caracteres es 300</span>
+                                    <span *ngIf="formWeb.get('motivo_consulta').hasError('minlength')"
+                                        class="text-danger col-lg-9">La cantidad minima de caracteres es 5</span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </ng-container>
+
+                </div>
+
+
+                <ng-container *ngIf="cargar_datos">
+                    <div class="card-footer">
+                        <div class="row">
+
+                            <div class="col-lg-12 text-center">
+                                <button style="padding-left:20px; padding-right:20px;" type="submit"
+                                    class="btn btn-success mr-2">Enviar</button>
+                                <!-- <button style="padding-left:20px; padding-right:20px;"
+                                onclick="location.href='https://ingreso.ciudadanianqn.gob.ar'"
+                                class="btn btn-secondary">Volver</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+
+
+            </form>
+
+
+
+            <!--end::Form-->
+        </div>
+        <!--end::Card-->
+
+    </div>
+</body>
