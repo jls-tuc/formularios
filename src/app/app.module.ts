@@ -23,7 +23,7 @@ import { TokenInterceptorService } from './pages/services/token-interceptor.serv
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule.forRoot({
-      siteKey: '6LeidU0bAAAAAOQ58mw9q6n8M7PoX_r9YH5OUAd-',
+      siteKey: '',
     }),
   ],
   providers: [
